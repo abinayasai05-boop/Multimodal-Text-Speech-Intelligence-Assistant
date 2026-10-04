@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Multimodal Intelligence Assistant</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                MI
+            </div>
+
+            <div>
+                <h2>TextVoice AI</h2>
+                <span>Intelligence Engine</span>
+            </div>
+
+        </div>
+
+
+        <button class="new-chat"
+                onclick="newConversation()">
+
+            <span>＋</span>
+            New Conversation
+
+        </button>
+
+
+        <div class="sidebar-section">
+
+            <p class="section-title">
+                CAPABILITIES
+            </p>
+
+            <div class="feature">
+                <span>💬</span>
+                Text Intelligence
+            </div>
+
+            <div class="feature">
+                <span>🎤</span>
+                Speech Recognition
+            </div>
+
+            <div class="feature">
+                <span>🧠</span>
+                Sentiment Analysis
+            </div>
+
+            <div class="feature">
+                <span>🔑</span>
+                Keyword Extraction
+            </div>
+
+            <div class="feature">
+                <span>🔊</span>
+                Voice Response
+            </div>
+
+        </div>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="system-status">
+
+                <span class="status-dot"></span>
+
+                <div>
+                    <strong>System Online</strong>
+                    <small>All services operational</small>
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <!-- HEADER -->
+
+        <header class="topbar">
+
+            <div>
+
+                <div class="badge">
+                    ✦ AI-POWERED MULTIMODAL ENGINE
+                </div>
+
+                <h1>
+                    Multimodal
+                    <span>Intelligence</span>
+                </h1>
+
+                <p>
+                    Analyze text, understand speech and discover
+                    meaningful insights instantly.
+                </p>
+
+            </div>
+
+            <div class="header-status">
+                <span class="status-dot"></span>
+                LIVE
+            </div>
+
+        </header>
+
+
+        <!-- CHAT -->
+
+        <section class="chat-area">
+
+            <div id="messages"
+                 class="messages">
+
+                <div class="message assistant">
+
+                    <div class="avatar">
+                        AI
+                    </div>
+
+                    <div class="message-content">
+
+                        <div class="message-name">
+                            Intelligence Assistant
+                        </div>
+
+                        <div class="bubble">
+
+                            <h3>
+                                Welcome! 👋
+                            </h3>
+
+                            <p>
+                                I'm your multimodal text and speech
+                                intelligence assistant.
+                            </p>
+
+                            <p>
+                                Type something below or use the
+                                microphone to begin.
+                            </p>
+
+                            <div class="quick-actions">
+
+                                <button onclick="quickPrompt(
+                                    'Analyze this text and tell me its sentiment.'
+                                )">
+                                    🧠 Analyze Text
+                                </button>
+
+                                <button onclick="quickPrompt(
+                                    'What can you do?'
+                                )">
+                                    ✨ What can you do?
+                                </button>
+
+                                <button onclick="startListening()">
+                                    🎤 Try Voice
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- TYPING -->
+
+            <div id="typing"
+                 class="typing hidden">
+
+                <span></span>
+                <span></span>
+                <span></span>
+
+                Assistant is analyzing...
+
+            </div>
+
+
+            <!-- INPUT -->
+
+            <div class="input-wrapper">
+
+                <div class="input-box">
+
+                    <textarea
+                        id="messageInput"
+                        rows="1"
+                        placeholder="Type your message or use the microphone..."
+                        onkeydown="handleKey(event)"
+                    ></textarea>
+
+
+                    <div class="input-actions">
+
+                        <button
+                            id="micButton"
+                            class="icon-button"
+                            title="Speech input"
+                            onclick="toggleListening()">
+
+                            🎤
+
+                        </button>
+
+
+                        <button
+                            class="send-button"
+                            onclick="sendMessage()">
+
+                            <span>Send</span>
+                            ➤
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="input-hint">
+
+                    <span>
+                        ENTER to send
+                    </span>
+
+                    <span>
+                        🎤 Voice enabled
+                    </span>
+
+                    <span>
+                        🔊 Speech output
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ANALYTICS PANEL -->
+
+    <aside class="analytics">
+
+        <div class="analytics-header">
+
+            <div>
+
+                <span class="eyebrow">
+                    REAL-TIME
+                </span>
+
+                <h2>
+                    Intelligence
+                </h2>
+
+            </div>
+
+            <div class="pulse">
+                ●
+            </div>
+
+        </div>
+
+
+        <!-- STAT CARDS -->
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+
+                <span class="stat-icon">
+                    Aa
+                </span>
+
+                <strong id="wordCount">
+                    0
+                </strong>
+
+                <small>
+                    Words
+                </small>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span class="stat-icon">
+                    #
+                </span>
+
+                <strong id="charCount">
+                    0
+                </strong>
+
+                <small>
+                    Characters
+                </small>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span class="stat-icon">
+                    ¶
+                </span>
+
+                <strong id="sentenceCount">
+                    0
+                </strong>
+
+                <small>
+                    Sentences
+                </small>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span class="stat-icon">
+                    ⏱
+                </span>
+
+                <strong id="readingTime">
+                    0m
+                </strong>
+
+                <small>
+                    Reading Time
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- SENTIMENT -->
+
+        <div class="panel-card">
+
+            <div class="panel-title">
+
+                <span>
+                    😊 Sentiment
+                </span>
+
+                <span id="sentimentLabel">
+                    Neutral
+                </span>
+
+            </div>
+
+            <div class="sentiment-meter">
+
+                <div
+                    id="sentimentBar"
+                    class="sentiment-bar">
+                </div>
+
+            </div>
+
+            <div class="sentiment-details">
+
+                <span>
+                    Confidence
+                </span>
+
+                <strong id="confidence">
+                    50%
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- KEYWORDS -->
+
+        <div class="panel-card">
+
+            <div class="panel-title">
+                <span>🔑 Keywords</span>
+            </div>
+
+            <div id="keywords"
+                 class="keywords">
+
+                <span class="empty">
+                    Keywords will appear here
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- ADVANCED METRICS -->
+
+        <div class="panel-card">
+
+            <div class="panel-title">
+
+                <span>
+                    📊 Text Metrics
+                </span>
+
+            </div>
+
+
+            <div class="metric">
+
+                <span>
+                    Avg. Word Length
+                </span>
+
+                <strong id="avgWordLength">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="metric">
+
+                <span>
+                    Avg. Sentence Length
+                </span>
+
+                <strong id="avgSentenceLength">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="metric">
+
+                <span>
+                    Paragraphs
+                </span>
+
+                <strong id="paragraphCount">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="metric">
+
+                <span>
+                    Longest Word
+                </span>
+
+                <strong id="longestWord">
+                    —
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- VOICE -->
+
+        <div class="voice-card">
+
+            <div class="voice-icon">
+                🎙
+            </div>
+
+            <div>
+
+                <strong>
+                    Voice Intelligence
+                </strong>
+
+                <p id="voiceStatus">
+                    Ready to listen
+                </p>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+</div>
+
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
